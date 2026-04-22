@@ -87,9 +87,61 @@ export const MONTHLY_STATS = [
 ];
 
 export const NAV = {
-  admin: ["dashboard", "members", "savings", "loans", "transactions", "anomalies", "reports", "audit", "settings"],
-  accountant: ["dashboard", "members", "savings", "loans", "transactions", "anomalies", "reports"],
-  member: ["dashboard", "savings", "loans", "transactions"],
+  admin: ["dashboard", "members", "staff", "savings", "loans", "transactions", "dayend", "vault", "anomalies", "reports", "audit", "settings"],
+  accountant: ["dashboard", "members", "savings", "loans", "transactions", "dayend", "vault", "anomalies", "reports"],
+  member: ["dashboard", "savings", "loans", "transactions", "vault"],
+};
+
+// Staff accounts managed by admin (Accountants / Managers)
+export const STAFF = [
+  { id: "S-01", name: "Priya Khadka",   email: "priya@scms.coop",   role: "Accountant", status: "Active",   joined: "2022-08-10", lastLogin: "Today 09:12" },
+  { id: "S-02", name: "Rohan Shrestha", email: "rohan@scms.coop",   role: "Manager",    status: "Active",   joined: "2021-03-22", lastLogin: "Today 08:45" },
+  { id: "S-03", name: "Nisha Tamang",   email: "nisha@scms.coop",   role: "Accountant", status: "Suspended",joined: "2023-11-02", lastLogin: "3 days ago" },
+];
+
+// Digital document vault (KYC docs, statements, receipts)
+export const DOCUMENTS = [
+  { id: "D-001", member: "Sanil Dulal",       name: "Citizenship_Front.pdf",   type: "KYC",        size: "312 KB", uploaded: "2023-04-12" },
+  { id: "D-002", member: "Sanil Dulal",       name: "Citizenship_Back.pdf",    type: "KYC",        size: "298 KB", uploaded: "2023-04-12" },
+  { id: "D-003", member: "Sanil Dulal",       name: "Statement_Apr2026.pdf",   type: "Statement",  size: "88 KB",  uploaded: "2026-04-01" },
+  { id: "D-004", member: "Sita Gurung",       name: "Loan_Agreement_L9002.pdf",type: "Loan Doc",   size: "512 KB", uploaded: "2024-06-18" },
+  { id: "D-005", member: "Anjali Bhattarai",  name: "KYC_Passport.pdf",        type: "KYC",        size: "420 KB", uploaded: "2021-08-09" },
+  { id: "D-006", member: "Manisha Rai",       name: "Income_Proof.pdf",        type: "KYC",        size: "245 KB", uploaded: "2024-10-04" },
+  { id: "D-007", member: "Kusum Poudel",      name: "Statement_Apr2026.pdf",   type: "Statement",  size: "76 KB",  uploaded: "2026-04-01" },
+];
+
+// Per-member passbook (Date · Description · Debit · Credit · Running Balance)
+export const PASSBOOKS = {
+  "Sanil Dulal": [
+    { date: "2026-03-01", desc: "Opening balance",             debit: 0,    credit: 0,     balance: 118900 },
+    { date: "2026-03-15", desc: "Salary deposit",              debit: 0,    credit: 15000, balance: 133900 },
+    { date: "2026-03-28", desc: "ATM withdrawal",              debit: 8500, credit: 0,     balance: 125400 },
+    { date: "2026-04-18", desc: "Deposit · T-5001",            debit: 0,    credit: 5000,  balance: 130400 },
+    { date: "2026-04-19", desc: "Online transfer · T-5006",    debit: 95000,credit: 0,     balance: 35400  },
+  ],
+  "Sita Gurung": [
+    { date: "2026-03-01", desc: "Opening balance",             debit: 0,    credit: 0,     balance: 218500 },
+    { date: "2026-03-10", desc: "Loan repayment · L-9002",     debit: 8500, credit: 0,     balance: 210000 },
+    { date: "2026-04-18", desc: "Loan repayment · T-5003",     debit: 8500, credit: 0,     balance: 201500 },
+  ],
+  "Kusum Poudel": [
+    { date: "2026-03-01", desc: "Opening balance",             debit: 0,    credit: 0,     balance: 86200 },
+    { date: "2026-04-18", desc: "ATM withdrawal · T-5002",     debit: 2000, credit: 0,     balance: 84200 },
+  ],
+};
+
+// Admin-configurable system settings (fraud thresholds, loan products)
+export const DEFAULT_CONFIG = {
+  savingsRate: 6.5,      // % p.a.
+  loanRate: 12.0,        // % p.a. base
+  penaltyRate: 2.0,      // % per overdue month
+  maxLoanTerm: 36,       // months
+  maxLoanAmount: 500000, // NPR
+  fraudSpikeMultiplier: 10,   // flag if tx > 10x of 30-day average
+  fraudHighAmount: 100000,    // NPR
+  fraudNightHourStart: 22,    // 10pm
+  fraudNightHourEnd: 5,       // 5am
+  mfaRequired: true,
 };
 
 export const NOTIFICATIONS = [

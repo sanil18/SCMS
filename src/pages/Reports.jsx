@@ -5,7 +5,7 @@ import {
   BarChart, Bar, PieChart, Pie, Cell, LineChart, Line,
   ResponsiveContainer, XAxis, YAxis, Tooltip, CartesianGrid, Legend,
 } from "recharts";
-import { FileBarChart2, Printer, Download, Landmark, PiggyBank, Users, AlertTriangle } from "lucide-react";
+import { FileBarChart2, Printer, Download, Landmark, PiggyBank, Users, AlertTriangle, Scale, TrendingUp } from "lucide-react";
 
 const COLORS = ["#10b981", "#3b82f6", "#8b5cf6", "#f59e0b", "#ef4444", "#06b6d4"];
 
@@ -34,10 +34,31 @@ export default function Reports() {
 
   const flagged = TRANSACTIONS.filter((t) => t.flagged).length;
 
+  // Balance Sheet (demo figures derived from seeds)
+  const cashOnHand = 412000;
+  const buildings = 1800000;
+  const receivablesInterest = 48000;
+  const totalAssets = cashOnHand + totalSavings + outstanding + buildings + receivablesInterest;
+
+  const memberSavingsLiability = totalSavings; // members' deposits owed back to them
+  const payables = 95000;
+  const totalLiabilities = memberSavingsLiability + payables;
+  const equity = totalAssets - totalLiabilities;
+
+  // Profit & Loss (period)
+  const interestIncome = txnByType.find((x) => x.type === "Loan Repay")?.amount * 0.35 || 0;
+  const feeIncome = 18500;
+  const totalIncome = interestIncome + feeIncome;
+  const salaries = 120000;
+  const operations = 62000;
+  const depreciation = 15000;
+  const totalExpenses = salaries + operations + depreciation;
+  const netProfit = totalIncome - totalExpenses;
+
   return (
     <Page
       title="Financial Reports"
-      subtitle="Month-end and ad-hoc reports across the cooperative"
+      subtitle="Balance Sheet, Profit & Loss and cooperative performance analytics"
       actions={
         <>
           <button
@@ -46,13 +67,15 @@ export default function Reports() {
           >
             <Printer className="h-4 w-4" /> Print
           </button>
-          <button className="h-10 px-4 rounded-lg bg-slate-900 text-white text-sm flex items-center gap-2 hover:bg-slate-800">
+          <button
+            onClick={() => window.print()}
+            className="h-10 px-4 rounded-lg bg-slate-900 text-white text-sm flex items-center gap-2 hover:bg-slate-800"
+          >
             <Download className="h-4 w-4" /> Export PDF
           </button>
         </>
       }
     >
-      {/* Report header — looks official when printed */}
       <Card className="p-6">
         <div className="flex items-start justify-between gap-4">
           <div>
@@ -69,11 +92,86 @@ export default function Reports() {
       </Card>
 
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
-        <StatCard icon={Users}     label="Registered Members"  value={MEMBERS.length}           tone="blue"   />
-        <StatCard icon={PiggyBank} label="Total Savings"        value={money(totalSavings)}      tone="green"  />
-        <StatCard icon={Landmark}  label="Outstanding Loans"    value={money(outstanding)}       tone="violet" />
-        <StatCard icon={AlertTriangle} label="Flagged Transactions" value={flagged}              tone="red"    />
+        <StatCard icon={Users}         label="Registered Members"   value={MEMBERS.length}       tone="blue"   />
+        <StatCard icon={PiggyBank}     label="Total Savings"         value={money(totalSavings)}  tone="green"  />
+        <StatCard icon={Landmark}      label="Outstanding Loans"     value={money(outstanding)}   tone="violet" />
+        <StatCard icon={AlertTriangle} label="Flagged Transactions"  value={flagged}              tone="red"    />
       </div>
+
+      {/* Balance Sheet */}
+      <Card className="p-5">
+        <div className="flex items-center justify-between mb-4">
+          <div className="flex items-center gap-2">
+            <div className="h-9 w-9 rounded-lg bg-blue-100 text-blue-700 grid place-items-center">
+              <Scale className="h-4 w-4" />
+            </div>
+            <div>
+              <div className="font-semibold">Balance Sheet</div>
+              <div className="text-xs text-slate-500">As at {new Date().toLocaleDateString()}</div>
+            </div>
+          </div>
+          <Badge tone="blue">Assets = Liabilities + Equity</Badge>
+        </div>
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 text-sm">
+          <div>
+            <div className="font-semibold text-slate-700 mb-2">Assets</div>
+            <LedgerRow label="Cash on hand"                value={cashOnHand} />
+            <LedgerRow label="Member savings accounts"    value={totalSavings} />
+            <LedgerRow label="Outstanding loans (receivable)" value={outstanding} />
+            <LedgerRow label="Interest receivable"        value={receivablesInterest} />
+            <LedgerRow label="Buildings & equipment"      value={buildings} />
+            <LedgerRow label="Total Assets"               value={totalAssets} strong />
+          </div>
+          <div>
+            <div className="font-semibold text-slate-700 mb-2">Liabilities & Equity</div>
+            <LedgerRow label="Member savings (liability)" value={memberSavingsLiability} />
+            <LedgerRow label="Payables"                   value={payables} />
+            <LedgerRow label="Total Liabilities"          value={totalLiabilities} strong />
+            <div className="h-2" />
+            <LedgerRow label="Members' equity"            value={equity} strong />
+            <LedgerRow label="Total Liabilities & Equity" value={totalLiabilities + equity} strong />
+          </div>
+        </div>
+      </Card>
+
+      {/* Profit & Loss */}
+      <Card className="p-5">
+        <div className="flex items-center justify-between mb-4">
+          <div className="flex items-center gap-2">
+            <div className="h-9 w-9 rounded-lg bg-emerald-100 text-emerald-700 grid place-items-center">
+              <TrendingUp className="h-4 w-4" />
+            </div>
+            <div>
+              <div className="font-semibold">Profit & Loss Statement</div>
+              <div className="text-xs text-slate-500">For the month ending {new Date().toLocaleDateString()}</div>
+            </div>
+          </div>
+          <Badge tone={netProfit >= 0 ? "green" : "red"}>
+            {netProfit >= 0 ? "Profit" : "Loss"}: {money(Math.abs(netProfit))}
+          </Badge>
+        </div>
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 text-sm">
+          <div>
+            <div className="font-semibold text-emerald-700 mb-2">Income</div>
+            <LedgerRow label="Interest income (loans)"    value={Math.round(interestIncome)} />
+            <LedgerRow label="Fees & service charges"     value={feeIncome} />
+            <LedgerRow label="Total Income"               value={Math.round(totalIncome)} strong />
+          </div>
+          <div>
+            <div className="font-semibold text-red-700 mb-2">Expenses</div>
+            <LedgerRow label="Salaries & benefits"        value={salaries} />
+            <LedgerRow label="Operational expenses"       value={operations} />
+            <LedgerRow label="Depreciation"               value={depreciation} />
+            <LedgerRow label="Total Expenses"             value={totalExpenses} strong />
+          </div>
+        </div>
+        <div className="mt-4 pt-4 border-t border-slate-200 flex items-center justify-between">
+          <div className="font-semibold">Net Profit / (Loss)</div>
+          <div className={`text-lg font-bold ${netProfit >= 0 ? "text-emerald-700" : "text-red-700"}`}>
+            {money(netProfit)}
+          </div>
+        </div>
+      </Card>
 
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-4">
         <Card className="lg:col-span-2 p-5">
@@ -212,6 +310,19 @@ export default function Reports() {
         </div>
       </Card>
     </Page>
+  );
+}
+
+function LedgerRow({ label, value, strong = false }) {
+  return (
+    <div
+      className={`flex justify-between py-1.5 ${
+        strong ? "font-semibold border-t border-slate-200 mt-1 pt-2" : "border-b border-slate-100 last:border-0"
+      }`}
+    >
+      <span className={strong ? "" : "text-slate-600"}>{label}</span>
+      <span>{money(value)}</span>
+    </div>
   );
 }
 

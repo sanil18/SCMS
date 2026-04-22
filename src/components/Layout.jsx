@@ -6,15 +6,19 @@ import { NOTIFICATIONS } from "../data";
 import {
   LayoutDashboard, Users, PiggyBank, Landmark, ArrowLeftRight,
   AlertTriangle, FileClock, Settings, LogOut, ShieldCheck, Bell, Search,
-  FileBarChart2, Mail, MessageSquare, Info, CheckCircle2
+  FileBarChart2, Mail, MessageSquare, Info, CheckCircle2,
+  UserCog, ClipboardCheck, FolderLock
 } from "lucide-react";
 
 const ICONS = {
   dashboard: LayoutDashboard,
   members: Users,
+  staff: UserCog,
   savings: PiggyBank,
   loans: Landmark,
   transactions: ArrowLeftRight,
+  dayend: ClipboardCheck,
+  vault: FolderLock,
   anomalies: AlertTriangle,
   reports: FileBarChart2,
   audit: FileClock,
@@ -24,9 +28,12 @@ const ICONS = {
 const LABELS = {
   dashboard: "Dashboard",
   members: "Members",
+  staff: "Staff",
   savings: "Savings",
   loans: "Loans",
   transactions: "Transactions",
+  dayend: "Day-End Closing",
+  vault: "Document Vault",
   anomalies: "Anomalies",
   reports: "Reports",
   audit: "Audit Log",
