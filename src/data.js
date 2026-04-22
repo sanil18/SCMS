@@ -3,12 +3,12 @@
 export const USERS = [
   {
     id: "U-001",
-    username: "bistakusum83@gmail.com",
+    username: "admin@scms.coop",
     password: "admin123",
     otp: "123456",
     name: "Kusum Bista",
     role: "admin",
-    email: "bistakusum83@gmail.com",
+    email: "admin@scms.coop",
     avatar: "KB",
   },
   {

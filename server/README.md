@@ -29,7 +29,7 @@ npm start           # → http://localhost:4000
 
 | Role       | Email                         | Password   | OTP    |
 |------------|-------------------------------|------------|--------|
-| Admin      | `bistakusum83@gmail.com`      | `admin123` | 123456 |
+| Admin      | `admin@scms.coop`             | `admin123` | 123456 |
 | Accountant | `accountant@scms.coop`        | `acc123`   | 123456 |
 | Member     | `member@scms.coop`            | `mem123`   | 123456 |
 
