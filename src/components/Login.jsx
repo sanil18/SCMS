@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { useAuth } from "../AuthContext";
-import { ShieldCheck, Lock, User, KeyRound, ArrowRight, Eye, EyeOff } from "lucide-react";
+import { ShieldCheck, Lock, User, KeyRound, ArrowRight } from "lucide-react";
 
 export default function Login() {
   const { login, verifyOtp } = useAuth();
@@ -8,7 +8,6 @@ export default function Login() {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [otp, setOtp] = useState("");
-  const [show, setShow] = useState(false);
   const [err, setErr] = useState("");
   const [pending, setPending] = useState(null);
   const [loading, setLoading] = useState(false);
@@ -54,15 +53,6 @@ export default function Login() {
           <h1 className="text-4xl font-bold leading-tight mb-4">
             Manage members, savings & loans with <span className="text-emerald-400">zero‑trust</span> security.
           </h1>
-          <p className="text-slate-300 mb-8 max-w-md">
-            Role-based access, multi-factor authentication, immutable audit logs
-            and real-time anomaly detection — all in one dashboard.
-          </p>
-          <ul className="space-y-3 text-sm text-slate-300">
-            <li className="flex items-center gap-2"><ShieldCheck className="h-4 w-4 text-emerald-400" /> MFA-protected login with time-bound OTP</li>
-            <li className="flex items-center gap-2"><ShieldCheck className="h-4 w-4 text-emerald-400" /> AES-256 at rest · TLS 1.3 in transit</li>
-            <li className="flex items-center gap-2"><ShieldCheck className="h-4 w-4 text-emerald-400" /> Rule-based anomaly engine (≥ 85% detection)</li>
-          </ul>
         </div>
 
         {/* Form panel */}
@@ -96,19 +86,11 @@ export default function Login() {
                   <input
                     value={password}
                     onChange={(e) => setPassword(e.target.value)}
-                    type={show ? "text" : "password"}
+                    type="password"
                     placeholder="••••••••"
                     className="w-full bg-transparent outline-none text-slate-100 placeholder:text-slate-500"
                     required
                   />
-                  <button
-                    type="button"
-                    onClick={() => setShow(!show)}
-                    className="text-slate-400 hover:text-slate-200"
-                    tabIndex={-1}
-                  >
-                    {show ? <EyeOff className="h-4 w-4" /> : <Eye className="h-4 w-4" />}
-                  </button>
                 </Field>
 
                 {err && <div className="text-sm text-red-400 bg-red-500/10 border border-red-500/30 rounded-md px-3 py-2">{err}</div>}
@@ -143,8 +125,10 @@ export default function Login() {
                     autoFocus
                     value={otp}
                     onChange={(e) => setOtp(e.target.value.replace(/\D/g, "").slice(0, 6))}
-                    placeholder="123456"
+                    placeholder="••••••"
+                    type="password"
                     inputMode="numeric"
+                    autoComplete="one-time-code"
                     className="w-full bg-transparent outline-none text-slate-100 placeholder:text-slate-500 tracking-[0.5em] text-lg"
                     required
                   />
@@ -171,9 +155,6 @@ export default function Login() {
             </>
           )}
 
-          <p className="mt-8 text-[11px] text-center text-slate-500">
-            Protected by MFA · Session audited · © SCMS {new Date().getFullYear()}
-          </p>
         </div>
       </div>
     </div>
