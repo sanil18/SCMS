@@ -13,7 +13,7 @@ export const USERS = [
   },
   {
     id: "U-002",
-    username: "accountant",
+    username: "accountant@scms.coop",
     password: "acc123",
     otp: "123456",
     name: "Priya Khadka",
@@ -23,7 +23,7 @@ export const USERS = [
   },
   {
     id: "U-003",
-    username: "member",
+    username: "member@scms.coop",
     password: "mem123",
     otp: "123456",
     name: "Sanil Dulal",

@@ -27,11 +27,11 @@ npm start           # → http://localhost:4000
 
 ## Demo credentials
 
-| Role       | Email / Username              | Password   | OTP    |
+| Role       | Email                         | Password   | OTP    |
 |------------|-------------------------------|------------|--------|
 | Admin      | `bistakusum83@gmail.com`      | `admin123` | 123456 |
-| Accountant | `accountant`                  | `acc123`   | 123456 |
-| Member     | `member`                      | `mem123`   | 123456 |
+| Accountant | `accountant@scms.coop`        | `acc123`   | 123456 |
+| Member     | `member@scms.coop`            | `mem123`   | 123456 |
 
 ## Endpoints
 
