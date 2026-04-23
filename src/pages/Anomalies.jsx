@@ -1,4 +1,4 @@
-import { useMemo, useState } from "react";
+import { useState } from "react";
 import { Page, Card, Badge, StatCard, Modal, money } from "../components/ui";
 import { TRANSACTIONS } from "../data";
 import { AlertTriangle, ShieldAlert, Activity, CheckCircle2, Snowflake, Eye } from "lucide-react";

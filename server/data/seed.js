@@ -3,9 +3,9 @@
 // They are generated on server boot (see server.js) to keep this file readable.
 
 export const USERS = [
-  { id: "U-001", username: "bistakusum83@gmail.com", role: "admin",      name: "Kusum Bista",   email: "bistakusum83@gmail.com", otp: "123456", plain: "admin123" },
-  { id: "U-002", username: "accountant", role: "accountant", name: "Priya Khadka",  email: "accountant@scms.coop", otp: "123456", plain: "acc123"   },
-  { id: "U-003", username: "member",     role: "member",     name: "Sanil Dulal",   email: "sanil@scms.coop",      otp: "123456", plain: "mem123"   },
+  { id: "U-001", username: "admin@scms.coop",      role: "admin",      name: "Kusum Bista",  email: "admin@scms.coop",      otp: "123456", plain: "admin123" },
+  { id: "U-002", username: "accountant@scms.coop", role: "accountant", name: "Priya Khadka", email: "accountant@scms.coop", otp: "123456", plain: "acc123"   },
+  { id: "U-003", username: "member@scms.coop",     role: "member",     name: "Sanil Dulal",  email: "member@scms.coop",     otp: "123456", plain: "mem123"   },
 ];
 
 export const MEMBERS = [

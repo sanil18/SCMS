@@ -1,3 +1,4 @@
+import { useState } from "react";
 import { Page, Card, StatCard, Badge, money } from "../components/ui";
 import { MEMBERS, LOANS, TRANSACTIONS, MONTHLY_STATS, AUDIT_LOGS } from "../data";
 import { totalInterest, calcEmi } from "../lib/finance";
@@ -10,6 +11,9 @@ import { FileBarChart2, Printer, Download, Landmark, PiggyBank, Users, AlertTria
 const COLORS = ["#10b981", "#3b82f6", "#8b5cf6", "#f59e0b", "#ef4444", "#06b6d4"];
 
 export default function Reports() {
+  // Stable report ID + timestamp captured on mount (lazy init keeps render pure)
+  const [reportId] = useState(() => `RPT-${Date.now().toString().slice(-6)}`);
+  const [generatedAt] = useState(() => new Date().toLocaleString());
   const totalSavings = MEMBERS.reduce((a, m) => a + m.savings, 0);
   const activeLoans = LOANS.filter((l) => l.status === "Active");
   const outstanding = activeLoans.reduce((a, l) => a + l.balance, 0);
@@ -82,7 +86,7 @@ export default function Reports() {
             <div className="text-xs uppercase tracking-widest text-slate-500">SCMS · Monthly Financial Report</div>
             <div className="text-2xl font-bold mt-1">Cooperative Performance — {new Date().toLocaleString("en-US", { month: "long", year: "numeric" })}</div>
             <div className="text-sm text-slate-500 mt-1">
-              Generated {new Date().toLocaleString()} · Report ID: RPT-{Date.now().toString().slice(-6)}
+              Generated {generatedAt} · Report ID: {reportId}
             </div>
           </div>
           <div className="h-12 w-12 rounded-xl bg-gradient-to-br from-blue-500 to-emerald-500 grid place-items-center text-white shadow">
