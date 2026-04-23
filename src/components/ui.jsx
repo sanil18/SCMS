@@ -21,7 +21,7 @@ export function Card({ children, className = "" }) {
   );
 }
 
-export function StatCard({ icon: Icon, label, value, trend, tone = "blue" }) {
+export function StatCard({ icon: Icon, label, value, trend, tone = "blue", className = "" }) {
   const tones = {
     blue: "from-blue-500 to-indigo-500",
     green: "from-emerald-500 to-teal-500",
@@ -30,7 +30,7 @@ export function StatCard({ icon: Icon, label, value, trend, tone = "blue" }) {
     violet: "from-violet-500 to-purple-500",
   };
   return (
-    <Card className="p-5">
+    <Card className={`p-5 ${className}`}>
       <div className="flex items-center justify-between">
         <div>
           <div className="text-sm text-slate-500">{label}</div>
